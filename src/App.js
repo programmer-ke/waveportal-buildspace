@@ -29,7 +29,7 @@ export default function App() {
 	    Let's print some free money like the central banks
 	  </div>
 
-	  <button className="waveButton" onClick={wave}>
+	  <button className="waveButton" onClick={null}>
 	    Let's go
 	  </button>
 	</div>
