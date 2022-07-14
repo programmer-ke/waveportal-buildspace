@@ -74,7 +74,7 @@ export default function App() {
 	    */}
 
 	  {!currentAccount && (
-              <button className="waveButton" onclick={connectWallet}>
+              <button className="waveButton" onClick={connectWallet}>
 		  Connect Wallet
               </button>
 	  )}
