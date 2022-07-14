@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
 import './App.css';
+import abi from "./utils/WavePortal.json";
 
 export default function App() {
 
+    // holds/sets state of connected account
     const [currentAccount, setCurrentAccount ] = useState("");
+
+    const contractAddress = "0x124920B1f42ADb4929A93058C91a66259305fAacf";
+    const contractABI = abi.abi;
 
     const checkIfWalletIsConnected = async () => {
 
@@ -49,6 +55,25 @@ export default function App() {
 	};
     };
 
+    const wave = async () => {
+	try {
+	    const { ethereum } = window;
+
+	    if (ethereum) {
+		const provider = new ethers.providers.Web3Provider(ethereum);
+		const signer = provider.getSigner();
+		const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+		let count = await wavePortalContract.getTotalWaves();
+		console.log("Retrieved total wave count...", count.toNumber());
+	    } else {
+		console.log("Metamask not detected!");
+	    }
+	} catch (error) {
+
+	}
+    };
+
     useEffect(() => {
 	checkIfWalletIsConnected();
     }, []);
@@ -65,7 +90,7 @@ export default function App() {
 	    Let's print some free money like the central banks
 	  </div>
 
-	  <button className="waveButton" onClick={null}>
+	  <button className="waveButton" onClick={wave}>
 	    Let's go
 	  </button>
 
