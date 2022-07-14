@@ -33,6 +33,22 @@ export default function App() {
 	
     };
 
+    const connectWallet = async () => {
+	try {
+	    const { ethereum } = window;
+	    if (!ethereum) {
+		alert("Metamask not detected. Cannot connect");
+		return;
+	    }
+	    // Request wallet account access
+	    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+	    console.log("Connected", accounts[0]);
+	    setCurrentAccount(accounts[0]);
+
+	} catch (error) {
+	};
+    };
+
     useEffect(() => {
 	checkIfWalletIsConnected();
     }, []);
@@ -52,6 +68,17 @@ export default function App() {
 	  <button className="waveButton" onClick={null}>
 	    Let's go
 	  </button>
+
+	  {/*
+	    * If there's no currentAccount, render the button below
+	    */}
+
+	  {!currentAccount && (
+              <button className="waveButton" onclick={connectWallet}>
+		  Connect Wallet
+              </button>
+	  )}
+
 	</div>
       </div>
     );
