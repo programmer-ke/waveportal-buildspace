@@ -8,7 +8,7 @@ export default function App() {
     // holds/sets state of connected account
     const [currentAccount, setCurrentAccount ] = useState("");
 
-    const contractAddress = "0x124920B1f42ADb4929A93058C91a66259305fAacf";
+    const contractAddress = "0x124920B1f42AD4929A93058C91a66259305fAacf";
     const contractABI = abi.abi;
 
     const checkIfWalletIsConnected = async () => {
