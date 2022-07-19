@@ -70,7 +70,7 @@ export default function App() {
 		console.log("Metamask not detected!");
 	    }
 	} catch (error) {
-
+	    console.log(error);
 	}
     };
 
