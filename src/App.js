@@ -66,6 +66,18 @@ export default function App() {
 
 		let count = await wavePortalContract.getTotalWaves();
 		console.log("Retrieved total wave count...", count.toNumber());
+
+		// Now execute wave on the contract. This means modifying the
+		// blockchain
+
+		const waveTxn = await wavePortalContract.wave();
+		console.log("Mining...", waveTxn.hash);
+		
+		await waveTxn.wait();
+		console.log("Mined --", waveTxn.hash);
+		
+		count = await wavePortalContract.getTotalWaves();
+		console.log("Retrieved total wave count...", count.toNumber());
 	    } else {
 		console.log("Metamask not detected!");
 	    }
@@ -74,6 +86,8 @@ export default function App() {
 	}
     };
 
+    // After every render, the anonymous is passed to useEffect
+    // and executed asynchronously
     useEffect(() => {
 	checkIfWalletIsConnected();
     }, []);
