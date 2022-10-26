@@ -60,6 +60,8 @@ export default function App() {
 	    const { ethereum } = window;
 
 	    if (ethereum) {
+		// Metamask in this our provider. We're using their servers
+		// to access the contract on-chain
 		const provider = new ethers.providers.Web3Provider(ethereum);
 		const signer = provider.getSigner();
 		const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
@@ -86,7 +88,7 @@ export default function App() {
 	}
     };
 
-    // After every render, the anonymous is passed to useEffect
+    // After every render, the anonymous function is passed to useEffect
     // and executed asynchronously
     useEffect(() => {
 	checkIfWalletIsConnected();
