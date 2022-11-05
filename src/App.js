@@ -5,11 +5,49 @@ import abi from "./utils/WavePortal.json";
 
 export default function App() {
 
-    // holds/sets state of connected account
+    // holds/sets app properties
     const [currentAccount, setCurrentAccount ] = useState("");
-
-    const contractAddress = "0x124920B1f42AD4929A93058C91a66259305fAacf";
+    const [allWaves, setAllWaves] = useState("");
+    
+    const contractAddress = "0x1324DB00aE4688B7bbC2617113A29CF28F89eBd5";
     const contractABI = abi.abi;
+
+    const getAllWaves = async () => {
+	try {
+	    const { ethereum } = window;
+	    if (ethereum) {
+		// metamask is our provider, we're using their servers
+		// to communicate with the contract
+		const provider = new ethers.providers.Web3Provider(ethereum);
+		const signer = provider.getSigner();
+		const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+		// call method on contract
+		const waves = await wavePortalContract.getAllWaves();
+
+		// extract required message attributes
+		let wavesCleaned = [];
+		
+		waves.forEach(wave => {
+		    wavesCleaned.push({
+			address: wave.waver,
+			timestamp: new Date(wave.timestamp * 1000),
+			message: wave.message
+		    });
+		});
+
+		// store waves in react's state
+		setAllWaves(wavesCleaned);
+		
+	    } else {
+		console.log("Make sure you have metamask");
+	    }
+	} catch (error) {
+	    console.log(error);
+	}
+    };
+
+
 
     const checkIfWalletIsConnected = async () => {
 
@@ -29,6 +67,7 @@ export default function App() {
 		const account = accounts[0];
 		console.log("Found an authorized account:", account);
 		setCurrentAccount(account);
+		getAllWaves();
 	    } else {
 		console.log("No authorized account found");
 	    }
@@ -72,7 +111,7 @@ export default function App() {
 		// Now execute wave on the contract. This means modifying the
 		// blockchain
 
-		const waveTxn = await wavePortalContract.wave();
+		const waveTxn = await wavePortalContract.wave("Random message");
 		console.log("Mining...", waveTxn.hash);
 		
 		await waveTxn.wait();
@@ -119,6 +158,16 @@ export default function App() {
 		  Connect Wallet
               </button>
 	  )}
+
+	  {allWaves.map((wave, index) => {
+	      return (
+		<div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
+		  <div>Address: {wave.address}</div>
+		  <div>Time: {wave.timestamp.toString()}</div>
+		  <div>Message: {wave.message}</div>		    
+		</div>    
+	      )
+	  })}
 
 	</div>
       </div>
