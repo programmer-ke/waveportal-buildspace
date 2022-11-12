@@ -8,6 +8,7 @@ export default function App() {
     // holds/sets app properties
     const [currentAccount, setCurrentAccount ] = useState("");
     const [allWaves, setAllWaves] = useState([]);
+    const [waveMessage, setWaveMessage] = useState("");
     
     const contractAddress = "0x1324DB00aE4688B7bbC2617113A29CF28F89eBd5";
     const contractABI = abi.abi;
@@ -46,8 +47,6 @@ export default function App() {
 	    console.log(error);
 	}
     };
-
-
 
     const checkIfWalletIsConnected = async () => {
 
@@ -131,6 +130,7 @@ export default function App() {
     // and executed asynchronously
     useEffect(() => {
 	checkIfWalletIsConnected();
+	console.log(waveMessage);
     }, []);
   
     return (
@@ -144,6 +144,10 @@ export default function App() {
 	  <div className="bio">
 	    Let's print some free money like the central banks
 	  </div>
+
+          <div>
+            <input value={waveMessage} onInput={e => setWaveMessage(e.target.value)} placeholder="your wave message"/>
+          </div>
 
 	  <button className="waveButton" onClick={wave}>
 	    Let's go
