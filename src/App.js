@@ -110,7 +110,9 @@ export default function App() {
 		// Now execute wave on the contract. This means modifying the
 		// blockchain
 
-		const waveTxn = await wavePortalContract.wave("Random message");
+		const waveTxn = await wavePortalContract.wave(waveMessage);
+		waveMessage = "";
+
 		console.log("Mining...", waveTxn.hash);
 		
 		await waveTxn.wait();
