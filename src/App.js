@@ -145,8 +145,8 @@ export default function App() {
 	    Let's print some free money like the central banks
 	  </div>
 
-          <div style="padding: 1em;">
-            <textarea style="width: 100%;" value={waveMessage} onInput={e => setWaveMessage(e.target.value)} placeholder="your wave message"></textarea>
+          <div style={{ padding: "1em" }}>
+            <textarea style={{ width: "100%" }} value={waveMessage} onInput={e => setWaveMessage(e.target.value)} placeholder="your wave message"></textarea>
           </div>
 
 	  <button className="waveButton" onClick={wave}>
