@@ -38,7 +38,7 @@ export default function App() {
 		});
 
 		// store waves in react's state
-		setAllWaves(wavesCleaned);
+		setAllWaves(wavesCleaned.reverse());
 		
 	    } else {
 		console.log("Make sure you have metamask");
