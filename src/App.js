@@ -111,7 +111,7 @@ export default function App() {
 		// blockchain
 
 		const waveTxn = await wavePortalContract.wave(waveMessage);
-		// waveMessage = setWaveMessage("");
+		setWaveMessage("");
 
 		console.log("Mining...", waveTxn.hash);
 		
